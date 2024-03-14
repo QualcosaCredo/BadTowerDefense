@@ -35,7 +35,7 @@ InputService.InputBegan:Connect(function(input,gameprocessed)
 		selectedUnit = mouse.Target.Parent
 		
 		local statsStr = parseAttr(selectedUnit:GetAttribute("UnitQueue"))
-
+		/* follow my explanation provided in GuiScript, why is this here? */
 		UpgradeFrame.UpgradeBackground.AttackSpeedLabel.Text = string.format("Speed: %s",statsStr[1])
 		UpgradeFrame.UpgradeBackground.AttackRangeLabel.Text = string.format("Range: %s",statsStr[2])
 		

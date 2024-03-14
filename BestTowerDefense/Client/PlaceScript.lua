@@ -14,6 +14,8 @@ local mouse = player:GetMouse()
 local lastInput = nil
 local lastKey = nil
 
+
+-- /* very misleading */
 UserInputService.InputBegan:Connect(function(input)
 	lastInput = input.UserInputType
 	lastKey = input.KeyCode
@@ -22,6 +24,7 @@ end)
 local function InsertCharacter(button)
 	local selected = nil
 	
+	-- such approach is pretty exploitable, since we could any unit given by 'button.Text' even If we don't own it.
 	for _, slots in player.Inventory:GetChildren() do
 		if slots.Value == button.Text then
 			selected = slots.Value
@@ -30,7 +33,7 @@ local function InsertCharacter(button)
 	end
 	
 	local tempChar = characters:FindFirstChild(selected):Clone()
-	tempChar.Parent = workspace	
+	tempChar.Parent = workspau
 	
 	mouse.TargetFilter = tempChar
 	
@@ -51,6 +54,7 @@ local function InsertCharacter(button)
 	rangeSphere.Material = Enum.Material.ForceField
 	rangeSphere.CastShadow = false
 	
+	/* needs recostructure */
 	while task.wait() and lastKey ~= Enum.KeyCode.Q do	
 		tempChar.HumanoidRootPart.CFrame = CFrame.new(0,1,0) + mouse.Hit.Position 
 		rangeSphere.CFrame = tempChar.HumanoidRootPart.CFrame
@@ -84,14 +88,17 @@ local function InsertCharacter(button)
 			break
 		end
 		
-		lastInput = nil
 		lastKey = nil
+
+		/* useless updating */
+		lastInput = nil
 	end
 	
 	tempChar:Destroy()
 	rangeSphere:Destroy()
 end
 
+-- this is an OK approach, but you could definitelly short this.. It would be tedious when `Slot`n units would be required.
 Button.Slot1.SlotButton.MouseButton1Click:Connect(function()
 	InsertCharacter(Button.Slot1.SlotButton)
 end)
